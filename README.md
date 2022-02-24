@@ -1,4 +1,4 @@
-# Hello Stranger
+# Hello 
 
 #### Introdução
 
@@ -31,5 +31,7 @@ Os testes foram feitos usando cypress, para rodar eles siga esses passos
 
 - yarn build
 - yarn start
-em outro terminal
+
+em outro terminal execute
+
 - yarn run-tests
