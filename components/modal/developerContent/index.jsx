@@ -198,20 +198,7 @@ export default function DeveloperContent() {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button
-          autoFocus
-          onClick={() =>
-            setPageState({
-              ...pageState,
-              dialog: {
-                open: false,
-                data: {},
-              },
-            })
-          }
-        >
-          Cancelar
-        </Button>
+        <Button onClick={() => closeModalCallback()}>Cancelar</Button>
         <InputButton type="submit" />
       </DialogActions>
     </form>
