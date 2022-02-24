@@ -7,7 +7,10 @@ import Swal from 'sweetalert2'
 import { usePageState } from '../../../context/pageState'
 import { Toast } from '../../general/Toast'
 import { mdiPencil } from '@mdi/js'
+import Image from 'next/image'
 import { api } from '../../../service'
+import emptyState from '../../../public/emptyState.png'
+import { EmptyContainer } from '../styles'
 
 export default function DevelopersTable(props) {
   const { pageState, setPageState } = usePageState()
@@ -65,65 +68,74 @@ export default function DevelopersTable(props) {
       }
     })
   }
+
+  console.log('state', Boolean(Object.keys(data?.map).length))
   return (
     <Container>
-      <table>
-        <thead>
-          <tr>
-            <td>id</td>
-            <td>Nivel</td>
-            <td>Nome</td>
-            <td>Genero</td>
-            <td>Data</td>
-            <td>Idade</td>
-            <td>Hobby</td>
-            <td style={{ textAlign: 'center' }}>Ações</td>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((value) => {
-            return (
-              <tr key={value.id}>
-                <td>{value.id}</td>
-                <td>{value.name_level}</td>
-                <td>{value.name}</td>
-                <td>{value.gender}</td>
-                <td>{moment(value.date).format('DD/MM/yyyy')}</td>
-                <td>{value.age}</td>
-                <td>{value.hobby}</td>
-                <td style={{ textAlign: 'center' }}>
-                  <Button
-                    data-test={`button-delete-developer-${value.name}`}
-                    className="button-delete"
-                    value={value.id}
-                    onClick={(e) => showAlert(e.currentTarget.value)}
-                  >
-                    <Icon
-                      path={mdiDelete}
-                      title="bin"
-                      size={1}
-                      className="binIcon"
-                    />
-                  </Button>
-                  <Button
-                    data-test={`button-edit-developer-${value.name}`}
-                    className="button-edit"
-                    value={value.id}
-                    onClick={() => openModalEditCallback(value)}
-                  >
-                    <Icon
-                      path={mdiPencil}
-                      title="pencil"
-                      size={1}
-                      class="pencilIcon"
-                    />
-                  </Button>
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      {!Boolean(Object.keys(data || {}).length) && (
+        <EmptyContainer>
+          <h2>Não existem registros</h2>
+        </EmptyContainer>
+      )}
+      {Boolean(Object.keys(data || {}).length) && (
+        <table>
+          <thead>
+            <tr>
+              <td>id</td>
+              <td>Nivel</td>
+              <td>Nome</td>
+              <td>Genero</td>
+              <td>Data</td>
+              <td>Idade</td>
+              <td>Hobby</td>
+              <td style={{ textAlign: 'center' }}>Ações</td>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((value) => {
+              return (
+                <tr key={value.id}>
+                  <td>{value.id}</td>
+                  <td>{value.name_level}</td>
+                  <td>{value.name}</td>
+                  <td>{value.gender}</td>
+                  <td>{moment(value.date).format('DD/MM/yyyy')}</td>
+                  <td>{value.age}</td>
+                  <td>{value.hobby}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <Button
+                      data-test={`button-delete-developer-${value.name}`}
+                      className="button-delete"
+                      value={value.id}
+                      onClick={(e) => showAlert(e.currentTarget.value)}
+                    >
+                      <Icon
+                        path={mdiDelete}
+                        title="bin"
+                        size={1}
+                        className="binIcon"
+                      />
+                    </Button>
+                    <Button
+                      data-test={`button-edit-developer-${value.name}`}
+                      className="button-edit"
+                      value={value.id}
+                      onClick={() => openModalEditCallback(value)}
+                    >
+                      <Icon
+                        path={mdiPencil}
+                        title="pencil"
+                        size={1}
+                        class="pencilIcon"
+                      />
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      )}
     </Container>
   )
 }

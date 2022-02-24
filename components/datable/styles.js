@@ -1,11 +1,21 @@
 import styled from 'styled-components'
 import { transparentize, darken } from 'polished'
 
+export const EmptyContainer = styled.div`
+  background-color: #8770fe;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 export const Container = styled.div`
   /* border-radius: 0.5rem; */
   width: 900px;
   margin: 2rem auto 0 auto;
-
+  h2 {
+    color: white;
+  }
   .button-edit,
   .pencilIcon {
     color: #8770fe !important;

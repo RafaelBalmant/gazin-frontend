@@ -7,6 +7,7 @@ import { Container } from './styles'
 import { ErrorMessages } from '../../../conts/translate/error'
 import { Toast } from '../../general/Toast'
 import { api } from '../../../service/'
+import { EmptyContainer } from '../styles'
 
 export default function LevelsTable() {
   const { pageState, setPageState } = usePageState()
@@ -56,7 +57,7 @@ export default function LevelsTable() {
         Toast.fire({
           icon: 'error',
           title:
-            ErrorMessages[e.response.data?.message].message ||
+            ErrorMessages[e.response.data?.message]?.message ||
             'Ocorreu um erro inesperado',
         })
       }
@@ -64,53 +65,60 @@ export default function LevelsTable() {
   }
   return (
     <Container>
-      <table>
-        <thead>
-          <tr>
-            <td>id</td>
-            <td>Level</td>
-            <td style={{ textAlign: 'end', paddingRight: '50px' }}>Ações</td>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((value) => {
-            return (
-              <tr key={value.id}>
-                <td>{value.id}</td>
-                <td>{value.level}</td>
-                <td style={{ textAlign: 'end', marginRight: '1rem' }}>
-                  <Button
-                    data-test={`button-delete-level-${value.level}`}
-                    className="button-delete"
-                    value={value.id}
-                    onClick={(e) => showAlert(e.currentTarget.value)}
-                  >
-                    <Icon
-                      path={mdiDelete}
-                      title="bin"
-                      size={1}
-                      className="binIcon"
-                    />
-                  </Button>
-                  <Button
-                    data-test={`button-edit-level-${value.level}`}
-                    className="button-edit"
-                    value={value.id}
-                    onClick={() => openModalEditCallback(value)}
-                  >
-                    <Icon
-                      path={mdiPencil}
-                      title="pencil"
-                      size={1}
-                      class="pencilIcon"
-                    />
-                  </Button>
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      {!Boolean(Object.keys(data || {}).length) && (
+        <EmptyContainer>
+          <h2>Não existem registros</h2>
+        </EmptyContainer>
+      )}
+      {Boolean(Object.keys(data || {}).length) && (
+        <table>
+          <thead>
+            <tr>
+              <td>id</td>
+              <td>Level</td>
+              <td style={{ textAlign: 'end', paddingRight: '50px' }}>Ações</td>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((value) => {
+              return (
+                <tr key={value.id}>
+                  <td>{value.id}</td>
+                  <td>{value.level}</td>
+                  <td style={{ textAlign: 'end', marginRight: '1rem' }}>
+                    <Button
+                      data-test={`button-delete-level-${value.level}`}
+                      className="button-delete"
+                      value={value.id}
+                      onClick={(e) => showAlert(e.currentTarget.value)}
+                    >
+                      <Icon
+                        path={mdiDelete}
+                        title="bin"
+                        size={1}
+                        className="binIcon"
+                      />
+                    </Button>
+                    <Button
+                      data-test={`button-edit-level-${value.level}`}
+                      className="button-edit"
+                      value={value.id}
+                      onClick={() => openModalEditCallback(value)}
+                    >
+                      <Icon
+                        path={mdiPencil}
+                        title="pencil"
+                        size={1}
+                        class="pencilIcon"
+                      />
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      )}
     </Container>
   )
 }
