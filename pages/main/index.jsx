@@ -4,8 +4,6 @@ import ModalCreate from '../../components/modal'
 import { usePageState } from '../../context/pageState'
 import getRecordsByState from '../../service/'
 
-import { Container, OptionsContainer, Button, DataContainer } from './styles'
-
 export default function Main() {
   const { pageState, setPageState } = usePageState()
   useEffect(() => {
@@ -18,11 +16,9 @@ export default function Main() {
   ])
 
   return (
-    <Container>
-      <DataContainer>
-        <Datable />
-      </DataContainer>
+    <div>
+      <Datable />
       <ModalCreate />
-    </Container>
+    </div>
   )
 }
