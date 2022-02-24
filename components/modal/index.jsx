@@ -9,19 +9,7 @@ export default function ModalCreate() {
 
   return (
     <>
-      <Dialog
-        open={dialog.open}
-        onClose={() =>
-          setPageState({
-            ...pageState,
-            dialog: {
-              open: !dialog.open,
-              data: {},
-            },
-          })
-        }
-        aria-labelledby="responsive-dialog-title"
-      >
+      <Dialog open={dialog.open} aria-labelledby="responsive-dialog-title">
         {pageState.currentPage === 'dev' && <DeveloperContent />}
         {pageState.currentPage === 'level' && <LevelContent />}
       </Dialog>

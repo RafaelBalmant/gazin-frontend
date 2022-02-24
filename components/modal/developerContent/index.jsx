@@ -1,5 +1,4 @@
 import { DialogActions, DialogTitle } from '@mui/material'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { usePageState } from '../../../context/pageState'
 import {
@@ -13,6 +12,7 @@ import {
 } from '../styles'
 import { useForm } from 'react-hook-form'
 import { Toast } from '../../general/Toast'
+import { api } from '../../../service'
 
 export default function DeveloperContent() {
   const { pageState, setPageState } = usePageState()
@@ -50,8 +50,8 @@ export default function DeveloperContent() {
     })
 
   const getLevelsCallback = () =>
-    axios
-      .get(`http://localhost:3333/level`, {
+    api
+      .get(`/level`, {
         params: {
           page: 1,
           limit: 99999,
@@ -62,14 +62,14 @@ export default function DeveloperContent() {
   const onSubmit = async (data) => {
     try {
       if (!Object.keys(dialog.data).length) {
-        await axios.post(`http://localhost:3333/developer`, {
+        await api.post(`/developer`, {
           ...data,
           age: Number(data.age),
         })
         successToastCallback()
         return closeModalCallback()
       }
-      await axios.put(`http://localhost:3333/developer`, {
+      await api.put(`/developer`, {
         ...data,
         age: Number(data.age),
         id: dialog.data.id,
@@ -79,7 +79,7 @@ export default function DeveloperContent() {
     } catch (err) {
       Toast.fire({
         icon: 'error',
-        title: `Ops... Ocorreu um erro inesperado, verifique os campos!`,
+        title: err.response.data?.message || 'Ocorreu um erro inesperado',
       })
     } finally {
     }
@@ -101,6 +101,7 @@ export default function DeveloperContent() {
           <label htmlFor="">Nome</label>
           <br />
           <Input
+            data-test="input-name-developer"
             placeholder="Nome"
             {...register('name', { required: true })}
             defaultValue={dialog.data.name}
@@ -113,6 +114,7 @@ export default function DeveloperContent() {
           <label htmlFor="">Idade</label>
           <br />
           <Input
+            data-test="input-age-developer"
             placeholder="Idade"
             type="number"
             {...register('age', { required: true })}
@@ -126,6 +128,7 @@ export default function DeveloperContent() {
           <label htmlFor="">Hobby</label>
           <br />
           <Input
+            data-test="input-hobby-developer"
             defaultValue={dialog.data.hobby}
             placeholder="Hobby"
             {...register('hobby', { required: true })}
@@ -139,6 +142,7 @@ export default function DeveloperContent() {
             <label htmlFor="">Nivel</label>
             <br />
             <select
+              data-test="select-level-developer"
               onClick={(e) => setLevelState(e.target.value)}
               name="nivel"
               id="level"
@@ -160,6 +164,7 @@ export default function DeveloperContent() {
           <label htmlFor="">Genero</label>
           <br />
           <select
+            data-test="select-gender-developer"
             name="genero"
             id="genero"
             {...register('gender', { required: true })}
@@ -182,6 +187,7 @@ export default function DeveloperContent() {
           <label htmlFor="">Nascimento</label>
           <br />
           <InputDate
+            data-test="input-date-developer"
             defaultValue={dialog.data.date}
             placeholder="Nascimento"
             mask="9999-99-99"
@@ -198,8 +204,10 @@ export default function DeveloperContent() {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => closeModalCallback()}>Cancelar</Button>
-        <InputButton type="submit" />
+        <Button onClick={() => closeModalCallback()} type="button">
+          Cancelar
+        </Button>
+        <InputButton type="submit" data-test="button-submit-developer" />
       </DialogActions>
     </form>
   )

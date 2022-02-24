@@ -5,7 +5,9 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --background: #eae6fd;
   }
-
+  .swal2-container {
+    z-index: 20000 !important;
+  }
   * {
     margin: 0;
     padding: 0;

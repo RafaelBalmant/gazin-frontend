@@ -4,11 +4,10 @@ import { Container } from './styles'
 import { mdiDelete } from '@mdi/js'
 import Icon from '@mdi/react'
 import Swal from 'sweetalert2'
-import axios from 'axios'
 import { usePageState } from '../../../context/pageState'
 import { Toast } from '../../general/Toast'
 import { mdiPencil } from '@mdi/js'
-import { useCallback } from 'react'
+import { api } from '../../../service'
 
 export default function DevelopersTable(props) {
   const { pageState, setPageState } = usePageState()
@@ -39,8 +38,8 @@ export default function DevelopersTable(props) {
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !Swal.isLoading(),
       preConfirm: async () => {
-        await axios
-          .delete('http://localhost:3333/developer', {
+        await api
+          .delete('/developer', {
             data: {
               id: Number(userId),
             },
@@ -56,8 +55,8 @@ export default function DevelopersTable(props) {
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios
-          .get(`http://localhost:3333/developer`)
+        await api
+          .get(`/developer`)
           .then((res) => setPageState({ ...pageState, apiRes: res.data }))
         Toast.fire({
           icon: 'success',
@@ -94,6 +93,7 @@ export default function DevelopersTable(props) {
                 <td>{value.hobby}</td>
                 <td style={{ textAlign: 'center' }}>
                   <Button
+                    data-test={`button-delete-developer-${value.name}`}
                     className="button-delete"
                     value={value.id}
                     onClick={(e) => showAlert(e.currentTarget.value)}
@@ -106,6 +106,7 @@ export default function DevelopersTable(props) {
                     />
                   </Button>
                   <Button
+                    data-test={`button-edit-developer-${value.name}`}
                     className="button-edit"
                     value={value.id}
                     onClick={() => openModalEditCallback(value)}

@@ -1,12 +1,12 @@
 import { Button } from '@mui/material'
 import Icon from '@mdi/react'
 import { mdiDelete, mdiPencil } from '@mdi/js'
-import axios from 'axios'
 import Swal from 'sweetalert2'
 import { usePageState } from '../../../context/pageState'
 import { Container } from './styles'
 import { ErrorMessages } from '../../../conts/translate/error'
 import { Toast } from '../../general/Toast'
+import { api } from '../../../service/'
 
 export default function LevelsTable() {
   const { pageState, setPageState } = usePageState()
@@ -39,13 +39,13 @@ export default function LevelsTable() {
     }).then(async (event) => {
       try {
         if (event.isConfirmed) {
-          await axios.delete('http://localhost:3333/level', {
+          await api.delete('/level', {
             data: {
               id: Number(levelId),
             },
           })
-          await axios
-            .get(`http://localhost:3333/level`)
+          await api
+            .get(`/level`)
             .then((res) => setPageState({ ...pageState, apiRes: res.data }))
           Toast.fire({
             icon: 'success',
@@ -80,6 +80,7 @@ export default function LevelsTable() {
                 <td>{value.level}</td>
                 <td style={{ textAlign: 'end', marginRight: '1rem' }}>
                   <Button
+                    data-test={`button-delete-level-${value.level}`}
                     className="button-delete"
                     value={value.id}
                     onClick={(e) => showAlert(e.currentTarget.value)}
@@ -92,6 +93,7 @@ export default function LevelsTable() {
                     />
                   </Button>
                   <Button
+                    data-test={`button-edit-level-${value.level}`}
                     className="button-edit"
                     value={value.id}
                     onClick={() => openModalEditCallback(value)}

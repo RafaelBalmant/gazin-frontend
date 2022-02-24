@@ -14,6 +14,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { Toast } from '../../general/Toast'
 import { ErrorMessages } from '../../../conts/translate/error'
+import { api } from '../../../service'
 
 export default function LevelContent() {
   const { pageState, setPageState } = usePageState()
@@ -29,6 +30,7 @@ export default function LevelContent() {
       ...pageState,
       dialog: {
         ...pageState.dialog,
+        data: {},
         open: false,
       },
     })
@@ -38,20 +40,20 @@ export default function LevelContent() {
     Toast.fire({
       icon: 'success',
       title: `O nivel ${
-        Object.keys(dialog.data).length ? 'atualizado' : 'criado'
+        Object.keys(dialog.data).length ? 'foi atualizado' : 'criado'
       } com sucesso`,
     })
 
   const onSubmit = async (data) => {
     try {
       if (!Object.keys(dialog.data).length) {
-        await axios.post(`http://localhost:3333/level`, {
+        await api.post(`/level`, {
           ...data,
         })
         successToastCallback()
         return closeModalCallback()
       }
-      await axios.put(`http://localhost:3333/level`, {
+      await api.put(`/level`, {
         ...data,
         id: dialog.data.id,
       })
@@ -60,15 +62,11 @@ export default function LevelContent() {
     } catch (err) {
       Toast.fire({
         icon: 'error',
-        title:
-          ErrorMessages[err.response.data?.message]?.message ||
-          'Ocorreu um erro inesperado',
+        title: err.response.data?.message || 'Ocorreu um erro inesperado',
       })
-    } finally {
     }
   }
 
-  console.log(dialog.data)
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <DialogHeader>
@@ -81,6 +79,7 @@ export default function LevelContent() {
           <label htmlFor="">Nome</label>
           <br />
           <Input
+            data-test="input-level-name"
             placeholder="Nome"
             {...register('level', { required: true })}
             defaultValue={dialog.data.level}
@@ -91,8 +90,10 @@ export default function LevelContent() {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => closeModalCallback()}>Cancelar</Button>
-        <InputButton type="submit" />
+        <Button onClick={closeModalCallback} type="button">
+          Cancelar
+        </Button>
+        <InputButton type="submit" data-test="button-submit-level" />
       </DialogActions>
     </form>
   )

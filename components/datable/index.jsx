@@ -16,8 +16,9 @@ import { mdiArrowLeft } from '@mdi/js'
 import { Button, MenuItem, Select } from '@mui/material'
 import { mdiArrowRight } from '@mdi/js'
 import { useCallback, useEffect, useState } from 'react'
-import axios from 'axios'
+
 import { Toast } from '../general/Toast'
+import { api } from '../../service'
 
 export default function Datable(props) {
   const { pageState, setPageState } = usePageState()
@@ -25,8 +26,8 @@ export default function Datable(props) {
   const [levels, setLevels] = useState([])
 
   const getLevelsCallback = () =>
-    axios
-      .get(`http://localhost:3333/level`, {
+    api
+      .get(`/level`, {
         params: {
           page: 1,
           limit: 99999,
@@ -77,6 +78,7 @@ export default function Datable(props) {
             DESENVOLVEDORES
           </HeaderButton>
           <HeaderButton
+            data-test="button-level-page"
             pageState={pageState.currentPage === 'level'}
             onClick={() =>
               setPageState({
@@ -92,7 +94,7 @@ export default function Datable(props) {
             NIVEIS
           </HeaderButton>
         </div>
-        <IconContainer onClick={openModalCallback}>
+        <IconContainer onClick={openModalCallback} data-test="button-open-modal-create">
           <Icon path={mdiPlusBox} title="bin" size={1} className="binIcon" />
         </IconContainer>
       </HeaderContainer>
