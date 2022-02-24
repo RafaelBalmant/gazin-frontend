@@ -25,3 +25,11 @@ Qualquer dúvida estarei a disposição nos meus contatos que você já deve ter
 
 AAA e o componente centra ta rodando no na rota /main
 
+#### Sobre testes
+
+Os testes foram feitos usando cypress, para rodar eles siga esses passos
+
+- yarn build
+- yarn start
+em outro terminal
+- yarn run-tests
