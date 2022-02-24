@@ -13,6 +13,7 @@ import {
 } from '../styles'
 import { useForm } from 'react-hook-form'
 import { Toast } from '../../general/Toast'
+import { ErrorMessages } from '../../../conts/translate/error'
 
 export default function LevelContent() {
   const { pageState, setPageState } = usePageState()
@@ -59,7 +60,9 @@ export default function LevelContent() {
     } catch (err) {
       Toast.fire({
         icon: 'error',
-        title: `Ops... Ocorreu um erro inesperado, verifique os campos!`,
+        title:
+          ErrorMessages[err.response.data?.message]?.message ||
+          'Ocorreu um erro inesperado',
       })
     } finally {
     }
@@ -88,20 +91,7 @@ export default function LevelContent() {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button
-          autoFocus
-          onClick={() =>
-            setPageState({
-              ...pageState,
-              dialog: {
-                open: false,
-                data: {},
-              },
-            })
-          }
-        >
-          Cancelar
-        </Button>
+        <Button onClick={() => closeModalCallback()}>Cancelar</Button>
         <InputButton type="submit" />
       </DialogActions>
     </form>
