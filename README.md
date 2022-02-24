@@ -23,3 +23,5 @@ Não tem segredo, é uma aplicação next, então tudo que você precisa está a
 
 Qualquer dúvida estarei a disposição nos meus contatos que você já deve ter, um abraço e muito obrigado pela oportunidade!
 
+AAA e o componente centra ta rodando no na rota /main
+
