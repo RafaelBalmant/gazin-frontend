@@ -1,7 +1,16 @@
 import { darken, transparentize } from 'polished'
 import styled from 'styled-components'
-import { DialogContent as DialogContentDefault } from '@mui/material'
+import {
+  DialogContent as DialogContentDefault,
+  Dialog as DialogDefault,
+} from '@mui/material'
 import InputMask from 'react-input-mask'
+
+export const Dialog = styled(DialogDefault)`
+  .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    min-width: 550px !important;
+  }
+`
 
 export const InputDate = styled(InputMask)`
   width: 100%;

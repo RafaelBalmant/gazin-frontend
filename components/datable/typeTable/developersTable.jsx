@@ -18,8 +18,6 @@ export default function DevelopersTable(props) {
     return null
   }
 
-  console.log(pageState)
-
   const openModalEditCallback = (data) => {
     setPageState({
       ...pageState,
@@ -80,10 +78,7 @@ export default function DevelopersTable(props) {
             <td>Data</td>
             <td>Idade</td>
             <td>Hobby</td>
-            <td style={{ textAlign: 'center' }}>Excluir</td>
-            <td>
-              <td style={{ textAlign: 'center' }}>Editar</td>
-            </td>
+            <td style={{ textAlign: 'center' }}>Ações</td>
           </tr>
         </thead>
         <tbody>
@@ -110,8 +105,6 @@ export default function DevelopersTable(props) {
                       className="binIcon"
                     />
                   </Button>
-                </td>
-                <td style={{ textAlign: 'center' }}>
                   <Button
                     className="button-edit"
                     value={value.id}

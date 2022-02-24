@@ -1,6 +1,7 @@
-import { Dialog } from '@mui/material'
 import { usePageState } from '../../context/pageState'
 import DeveloperContent from './developerContent'
+import LevelContent from './levelContent'
+import { Dialog } from './styles'
 
 export default function ModalCreate() {
   const { pageState, setPageState } = usePageState()
@@ -22,6 +23,7 @@ export default function ModalCreate() {
         aria-labelledby="responsive-dialog-title"
       >
         {pageState.currentPage === 'dev' && <DeveloperContent />}
+        {pageState.currentPage === 'level' && <LevelContent />}
       </Dialog>
     </>
   )

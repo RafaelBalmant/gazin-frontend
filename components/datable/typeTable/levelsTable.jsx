@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 import Icon from '@mdi/react'
-import { mdiDelete } from '@mdi/js'
+import { mdiDelete, mdiPencil } from '@mdi/js'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { usePageState } from '../../../context/pageState'
@@ -14,6 +14,17 @@ export default function LevelsTable() {
 
   if (pageState.currentPage !== 'level') {
     return null
+  }
+
+  const openModalEditCallback = (data) => {
+    setPageState({
+      ...pageState,
+      dialog: {
+        ...pageState.dialog,
+        open: true,
+        data: data,
+      },
+    })
   }
 
   const showAlert = async (levelId) => {
@@ -58,7 +69,7 @@ export default function LevelsTable() {
           <tr>
             <td>id</td>
             <td>Level</td>
-            <td style={{ textAlign: 'end', paddingRight: '16px' }}>Excluir</td>
+            <td style={{ textAlign: 'end', paddingRight: '50px' }}>Ações</td>
           </tr>
         </thead>
         <tbody>
@@ -78,6 +89,18 @@ export default function LevelsTable() {
                       title="bin"
                       size={1}
                       className="binIcon"
+                    />
+                  </Button>
+                  <Button
+                    className="button-edit"
+                    value={value.id}
+                    onClick={() => openModalEditCallback(value)}
+                  >
+                    <Icon
+                      path={mdiPencil}
+                      title="pencil"
+                      size={1}
+                      class="pencilIcon"
                     />
                   </Button>
                 </td>
