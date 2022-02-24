@@ -134,7 +134,7 @@ export default function DeveloperContent() {
             {errors.hobby?.type === 'required' && 'O campo hobby é obrigátorio'}
           </ErrorMessage>
         </div>
-        {levels.data?.length && (
+        {Boolean(levels.data?.length) && (
           <div>
             <label htmlFor="">Nivel</label>
             <br />

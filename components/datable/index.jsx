@@ -15,10 +15,47 @@ import Icon from '@mdi/react'
 import { mdiArrowLeft } from '@mdi/js'
 import { Button, MenuItem, Select } from '@mui/material'
 import { mdiArrowRight } from '@mdi/js'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
+import { Toast } from '../general/Toast'
 
 export default function Datable(props) {
   const { pageState, setPageState } = usePageState()
+
+  const [levels, setLevels] = useState([])
+
+  const getLevelsCallback = () =>
+    axios
+      .get(`http://localhost:3333/level`, {
+        params: {
+          page: 1,
+          limit: 99999,
+        },
+      })
+      .then((res) => setLevels(res.data))
+
+  useEffect(() => getLevelsCallback(), [pageState.currentPage])
+
+  const openModalCallback = useCallback(() => {
+    const havedLevelsRegisterd =
+      pageState.currentPage === 'dev'
+        ? Boolean(Object.keys(levels.data || {}).length)
+        : true
+    if (havedLevelsRegisterd) {
+      return setPageState({
+        ...pageState,
+        dialog: {
+          open: true,
+          data: {},
+          type: pageState.currentPage,
+        },
+      })
+    }
+    Toast.fire({
+      icon: 'error',
+      title: 'Crie pelo menos um nivel para registrar o desenvolvedor',
+    })
+  }, [levels, pageState.currentPage])
 
   return (
     <Container>
@@ -55,18 +92,7 @@ export default function Datable(props) {
             NIVEIS
           </HeaderButton>
         </div>
-        <IconContainer
-          onClick={() =>
-            setPageState({
-              ...pageState,
-              dialog: {
-                open: true,
-                data: {},
-                type: pageState.currentPage,
-              },
-            })
-          }
-        >
+        <IconContainer onClick={openModalCallback}>
           <Icon path={mdiPlusBox} title="bin" size={1} className="binIcon" />
         </IconContainer>
       </HeaderContainer>
