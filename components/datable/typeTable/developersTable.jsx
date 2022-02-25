@@ -9,7 +9,6 @@ import { Toast } from '../../general/Toast'
 import { mdiPencil } from '@mdi/js'
 import Image from 'next/image'
 import { api } from '../../../service'
-import emptyState from '../../../public/emptyState.png'
 import { EmptyContainer } from '../styles'
 
 export default function DevelopersTable(props) {
