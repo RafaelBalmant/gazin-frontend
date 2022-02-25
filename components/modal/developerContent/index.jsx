@@ -13,11 +13,13 @@ import {
 import { useForm } from 'react-hook-form'
 import { Toast } from '../../general/Toast'
 import { api } from '../../../service'
+import CircularProgress from '@mui/material/CircularProgress'
 
 export default function DeveloperContent() {
   const { pageState, setPageState } = usePageState()
   const [levels, setLevels] = useState([])
   const [levelState, setLevelState] = useState()
+  const [isLoading, setIsLoading] = useState(false)
   const { dialog } = pageState
   const {
     register,
@@ -60,6 +62,7 @@ export default function DeveloperContent() {
       .then((res) => setLevels(res.data))
 
   const onSubmit = async (data) => {
+    setIsLoading(true)
     try {
       if (!Object.keys(dialog.data).length) {
         await api.post(`/developer`, {
@@ -82,6 +85,7 @@ export default function DeveloperContent() {
         title: err.response.data?.message || 'Ocorreu um erro inesperado',
       })
     } finally {
+      setIsLoading(false)
     }
   }
 
@@ -103,11 +107,13 @@ export default function DeveloperContent() {
           <Input
             data-test="input-name-developer"
             placeholder="Nome"
-            {...register('name', { required: true })}
+            {...register('name', { required: true, maxLength: 30 })}
             defaultValue={dialog.data.name}
           />
           <ErrorMessage>
-            {errors.name?.type === 'required' && 'O campo nome é obrigátorio'}
+            {(errors.name?.type === 'required' &&
+              'O campo nome é obrigátorio') ||
+              (errors?.name && 'Informe um nome valido')}
           </ErrorMessage>
         </div>
         <div>
@@ -117,11 +123,18 @@ export default function DeveloperContent() {
             data-test="input-age-developer"
             placeholder="Idade"
             type="number"
-            {...register('age', { required: true })}
+            {...register('age', {
+              required: true,
+              min: 18,
+              max: 99,
+              maxLength: 2,
+            })}
             defaultValue={dialog.data.age}
           />
           <ErrorMessage>
-            {errors.age?.type === 'required' && 'O campo idade é obrigátorio'}
+            {(errors.age?.type === 'required' &&
+              'O campo idade é obrigátorio') ||
+              (errors?.age && 'Informe uma idade valida')}
           </ErrorMessage>
         </div>
         <div>
@@ -131,10 +144,12 @@ export default function DeveloperContent() {
             data-test="input-hobby-developer"
             defaultValue={dialog.data.hobby}
             placeholder="Hobby"
-            {...register('hobby', { required: true })}
+            {...register('hobby', { required: true, maxLength: 20 })}
           />
           <ErrorMessage>
-            {errors.hobby?.type === 'required' && 'O campo hobby é obrigátorio'}
+            {(errors.hobby?.type === 'required' &&
+              'O campo hobby é obrigátorio') ||
+              (errors.hobby?.type === 'maxLength' && 'Informe menos letras')}
           </ErrorMessage>
         </div>
         {Boolean(levels.data?.length) && (
@@ -197,9 +212,7 @@ export default function DeveloperContent() {
             })}
           />
           <ErrorMessage>
-            {(errors.date?.type === 'required' &&
-              'O campo nascimento é obrigátorio') ||
-              (errors.date?.type === 'pattern' && 'Informe uma data válida')}
+            {errors?.date && 'Informe uma data válida'}
           </ErrorMessage>
         </div>
       </DialogContent>
@@ -207,7 +220,10 @@ export default function DeveloperContent() {
         <Button onClick={() => closeModalCallback()} type="button">
           Cancelar
         </Button>
-        <InputButton type="submit" data-test="button-submit-developer" />
+        {isLoading && <CircularProgress color="secondary" />}
+        {!isLoading && (
+          <InputButton type="submit" data-test="button-submit-developer" />
+        )}
       </DialogActions>
     </form>
   )

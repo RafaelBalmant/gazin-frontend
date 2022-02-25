@@ -125,7 +125,7 @@ export default function DevelopersTable(props) {
                         path={mdiPencil}
                         title="pencil"
                         size={1}
-                        class="pencilIcon"
+                        className="pencilIcon"
                       />
                     </Button>
                   </td>

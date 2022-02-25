@@ -6,7 +6,7 @@ const level = new Level()
 const developer = new Developer()
 describe('Level', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:5000/main')
+    cy.visit('http://localhost:3000/main')
   })
   const levelName = faker.random.word()
   it('user register a level', () => {
@@ -24,7 +24,7 @@ describe('Level', () => {
 
 describe('developer', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:5000/main')
+    cy.visit('http://localhost:3000/main')
   })
   const levelName = faker.random.word()
 

@@ -1,4 +1,4 @@
-import { DialogActions, DialogTitle } from '@mui/material'
+import { CircularProgress, DialogActions, DialogTitle } from '@mui/material'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { usePageState } from '../../../context/pageState'
@@ -19,6 +19,8 @@ import { api } from '../../../service'
 export default function LevelContent() {
   const { pageState, setPageState } = usePageState()
   const { dialog } = pageState
+  const [isLoading, setIsLoading] = useState(false)
+
   const {
     register,
     formState: { errors },
@@ -45,6 +47,7 @@ export default function LevelContent() {
     })
 
   const onSubmit = async (data) => {
+    setIsLoading(true)
     try {
       if (!Object.keys(dialog.data).length) {
         await api.post(`/level`, {
@@ -64,6 +67,8 @@ export default function LevelContent() {
         icon: 'error',
         title: err.response.data?.message || 'Ocorreu um erro inesperado',
       })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -81,7 +86,7 @@ export default function LevelContent() {
           <Input
             data-test="input-level-name"
             placeholder="Nome"
-            {...register('level', { required: true })}
+            {...register('level', { required: true, maxLength: 10 })}
             defaultValue={dialog.data.level}
           />
           <ErrorMessage>
@@ -93,7 +98,10 @@ export default function LevelContent() {
         <Button onClick={closeModalCallback} type="button">
           Cancelar
         </Button>
-        <InputButton type="submit" data-test="button-submit-level" />
+        {isLoading && <CircularProgress color="secondary" />}
+        {!isLoading && (
+          <InputButton type="submit" data-test="button-submit-level" />
+        )}{' '}
       </DialogActions>
     </form>
   )
