@@ -19,19 +19,16 @@ Procurei usar o gerenciamento de estado vanilla do react que é o use context po
 
 #### Como roda o frontend
 
-Não tem segredo, é uma aplicação next, então tudo que você precisa está aqui! https://nextjs.org/docs/getting-started
+Para rodar o front você deve ter o docker instalado, execute os seguintes comandos:
 
-Qualquer dúvida estarei a disposição nos meus contatos que você já deve ter, um abraço e muito obrigado pela oportunidade!
+ - docker build -t client .
 
-AAA e o componente centra ta rodando no na rota /main
+ - docker run --name CLIENT_CONTAINER -p 0.0.0.0:5000:3000 client
+
+Lembrando que o backend deve estar em funcionamento, para acessar a aplicação vá para o caminho http://localhost:5000/main em seu navegador
 
 #### Sobre testes
 
-Os testes foram feitos usando cypress, para rodar eles siga esses passos
-
-- yarn build
-- yarn start
-
-em outro terminal execute
+Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo (a aplicaçãod deve estar em funcionamento, tanto o backend como o frontend)
 
 - yarn run-tests
