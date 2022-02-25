@@ -29,6 +29,6 @@ Lembrando que o backend deve estar em funcionamento, para acessar a aplicação 
 
 #### Sobre testes
 
-Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo (a aplicaçãod deve estar em funcionamento, tanto o backend como o frontend)
+Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo (a aplicação deve estar em funcionamento, tanto o backend como o frontend)
 
 - yarn run-tests
