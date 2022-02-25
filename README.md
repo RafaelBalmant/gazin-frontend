@@ -19,11 +19,11 @@ Procurei usar o gerenciamento de estado vanilla do react que é o use context po
 
 #### Como roda o frontend
 
-Não tem segredo, é uma aplicação next, então tudo que você precisa está aqui! https://nextjs.org/docs/getting-started
+Para rodar o front você deve ter o docker instalado, execute os seguintes comandos:
 
-Qualquer dúvida estarei a disposição nos meus contatos que você já deve ter, um abraço e muito obrigado pela oportunidade!
+ - docker build . -t gazin-frontend
 
-AAA e o componente central esta rodando na rota /main
+ - docker run -e PORT=3000 gazin-frontend
 
 #### Sobre testes
 
