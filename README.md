@@ -27,8 +27,11 @@ AAA e o componente central esta rodando na rota /main
 
 #### Sobre testes
 
+Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo
+
 Os testes foram feitos usando cypress, para rodar eles siga esses passos
 
+- yarn
 - yarn build
 - yarn start
 
