@@ -29,14 +29,6 @@ Lembrando que o backend deve estar em funcionamento, para acessar a aplicação 
 
 #### Sobre testes
 
-Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo
-
-Os testes foram feitos usando cypress, para rodar eles siga esses passos
-
-- yarn
-- yarn build
-- yarn start
-
-em outro terminal execute
+Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo (a aplicaçãod deve estar em funcionamento, tanto o backend como o frontend)
 
 - yarn run-tests
