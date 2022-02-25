@@ -25,6 +25,8 @@ Para rodar o front você deve ter o docker instalado, execute os seguintes coman
 
  - docker run --name CLIENT_CONTAINER -p 0.0.0.0:5000:3000 client
 
+Lembrando que o backend deve estar em funcionamento, para acessar a aplicação vá para o caminho http://localhost:5000/main em seu navegador
+
 #### Sobre testes
 
 Para execução dos testes te aconselho fazer isso no seu ambiente local! Então siga os passos abaixo
