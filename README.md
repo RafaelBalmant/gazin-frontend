@@ -21,9 +21,9 @@ Procurei usar o gerenciamento de estado vanilla do react que é o use context po
 
 Para rodar o front você deve ter o docker instalado, execute os seguintes comandos:
 
- - docker build . -t gazin-frontend
+ - docker build -t client .
 
- - docker run -e PORT=3000 gazin-frontend
+ - docker run --name CLIENT_CONTAINER -p 0.0.0.0:5000:3000 client
 
 #### Sobre testes
 
